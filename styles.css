@@ -15,6 +15,18 @@ body {
     height: 100vh;
     background-color: skyblue;
   }
+  #instructions {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 5px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
   
   #ground {
     position: absolute;
