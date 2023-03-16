@@ -57,10 +57,11 @@ body {
     left: 10px;
     top: 10px;
     background-color: red;
-    width: 100px;
+    width: calc(50% - 20px); /* Extend the health bar almost to the center */
   }
   #health-bar-b {
     right: 10px;
     top: 10px;
     background-color: blue;
-    width: 100px;
+    width: calc(50% - 20px); /* Extend the health bar almost to the center */
+  }
