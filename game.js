@@ -24,10 +24,23 @@ function moveKnight(knight, dx, dy) {
 }
 
 function moveKnightSmoothly(knight, dx, dy) {
-  const rect = knight.getBoundingClientRect();
-  knight.style.left = `${rect.left + dx}px`;
-  knight.style.top = `${rect.top + dy}px`;
-}
+    const rect = knight.getBoundingClientRect();
+    const nextLeft = rect.left + dx;
+    const nextTop = rect.top + dy;
+    const leftWall = document.getElementById('left-wall').getBoundingClientRect();
+    const rightWall = document.getElementById('right-wall').getBoundingClientRect();
+  
+    // Horizontal movement
+    if (nextLeft > leftWall.right && nextLeft + rect.width < rightWall.left) {
+      knight.style.left = `${nextLeft}px`;
+    }
+  
+    // Vertical movement
+    const withinVerticalBounds = nextTop > 0 && nextTop < knight.parentElement.offsetHeight - knight.offsetHeight;
+    if (withinVerticalBounds || dy == 0) {
+      knight.style.top = `${nextTop}px`;
+    }
+  }
 
 function isOnGround(knight) {
   const groundPosition = knight.parentElement.offsetHeight - ground.offsetHeight - knight.offsetHeight;
