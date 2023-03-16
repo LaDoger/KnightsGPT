@@ -36,12 +36,17 @@ body {
     position: absolute;
     width: 50px;
     height: 100px;
-    background-color: red;
     bottom: 50px;
   }
+  
+  #knight-a {
+    background-color: red;
+    left: 10%; /* Position KnightA with 10% offset from the left side */
+  }
+  
   #knight-b {
     background-color: blue;
-    left: 100px;
+    right: 10%; /* Position KnightB with 10% offset from the right side */
   }
   
   .health-bar {
