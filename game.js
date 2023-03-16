@@ -76,7 +76,7 @@ function attack(knight, target, healthBar, health) {
   if (isInRange(knight, target)) {
     health -= attackDamage;
     if (health < 0) health = 0;
-    healthBar.style.width = `${health}%`;
+    healthBar.style.width = `${(health / 100) * parseFloat(getComputedStyle(healthBar).width)}px`;
   }
   return health;
 }
