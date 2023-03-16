@@ -7,14 +7,23 @@ const ground = document.getElementById('ground');
 let healthA = 100;
 let healthB = 100;
 
-const moveSpeed = 10;
+const moveSpeed = 50;
 const jumpHeight = 200;
 const jumpSpeed = 3;
 const fallSpeed = 3;
 const attackRange = 75;
 const attackDamage = 10;
 
+let moveIntervalA;
+let moveIntervalB;
+
 function moveKnight(knight, dx, dy) {
+  const rect = knight.getBoundingClientRect();
+  knight.style.left = `${rect.left + dx}px`;
+  knight.style.top = `${rect.top + dy}px`;
+}
+
+function moveKnightSmoothly(knight, dx, dy) {
   const rect = knight.getBoundingClientRect();
   knight.style.left = `${rect.left + dx}px`;
   knight.style.top = `${rect.top + dy}px`;
@@ -78,10 +87,14 @@ document.addEventListener('keydown', event => {
       jumpKnight(knightA);
       break;
     case 'a':
-      moveKnight(knightA, -moveSpeed, 0);
+      if (!moveIntervalA) {
+        moveIntervalA = setInterval(() => moveKnightSmoothly(knightA, -moveSpeed / 10, 0), 1000 / 60);
+      }
       break;
     case 'd':
-      moveKnight(knightA, moveSpeed, 0);
+      if (!moveIntervalA) {
+        moveIntervalA = setInterval(() => moveKnightSmoothly(knightA, moveSpeed / 10, 0), 1000 / 60);
+      }
       break;
     case 'f':
       healthB = attack(knightA, knightB, healthBarB, healthB);
@@ -91,14 +104,33 @@ document.addEventListener('keydown', event => {
       jumpKnight(knightB);
       break;
     case 'ArrowLeft':
-      moveKnight(knightB, -moveSpeed, 0);
+      if (!moveIntervalB) {
+        moveIntervalB = setInterval(() => moveKnightSmoothly(knightB, -moveSpeed / 10, 0), 1000 / 60);
+      }
       break;
     case 'ArrowRight':
-      moveKnight(knightB, moveSpeed, 0);
+      if (!moveIntervalB) {
+        moveIntervalB = setInterval(() => moveKnightSmoothly(knightB, moveSpeed / 10, 0), 1000 / 60);
+      }
       break;
     case '/':
       healthA = attack(knightB, knightA, healthBarA, healthA);
       checkWin();
+      break;
+  }
+});
+
+document.addEventListener('keyup', event => {
+  switch (event.key) {
+    case 'a':
+    case 'd':
+      clearInterval(moveIntervalA);
+      moveIntervalA = null;
+      break;
+    case 'ArrowLeft':
+    case 'ArrowRight':
+      clearInterval(moveIntervalB);
+      moveIntervalB = null;
       break;
   }
 });
